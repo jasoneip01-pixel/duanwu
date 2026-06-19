@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>端午 · 楚魂</title>
+<style>
+  :root {
+    --ink: #1a1514;
+    --paper: #f7f2e9;
+    --paper-warm: #efe8db;
+    --vermillion: #c43a31;
+    --vermillion-deep: #8b1a1a;
+    --celadon: #7a9e8a;
+    --celadon-light: #b8cfc2;
+    --gold: #c9a76b;
+    --gold-pale: #e8d9b8;
+    --text: #2c2416;
+    --text-soft: #6b5e4f;
+    --water: #5b8c7a;
+
+    --serif: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'SimSun', 'STSong', serif;
+    --sans: 'Noto Sans SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    background: var(--paper);
+    color: var(--text);
+  }
+
+  body {
+    font-family: var(--sans);
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    background: var(--paper);
+  }
+
+  /* ========== HERO ========== */
+  .hero {
+    position: relative;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: var(--ink);
+  }
+
+  /* 墨韵背景层 */
+  .hero__ink {
+    position: absolute;
+    inset: 0;
+    opacity: 0.85;
+  }
+
+  .hero__ink-wash {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    animation: inkSpread 12s ease-in-out infinite alternate;
+  }
+
+  .hero__ink-wash:nth-child(1) {
+    width: 70vmax; height: 70vmax;
+    background: radial-gradient(circle at 60% 40%, rgba(196,58,49,0.25) 0%, transparent 70%);
+    top: -20%; left: -10%;
+    animation-delay: 0s;
+  }
+
+  .hero__ink-wash:nth-child(2) {
+    width: 60vmax; height: 60vmax;
+    background: radial-gradient(circle at 30% 60%, rgba(122,158,138,0.2) 0%, transparent 70%);
+    bottom: -15%; right: -10%;
+    animation-delay: -4s;
+  }
+
+  .hero__ink-wash:nth-child(3) {
+    width: 50vmax; height: 50vmax;
+    background: radial-gradient(circle at 70% 50%, rgba(201,167,107,0.15) 0%, transparent 65%);
+    top: 30%; left: 40%;
+    animation-delay: -8s;
+  }
+
+  /* 水面波纹 */
+  .hero__ripple {
+    position: absolute;
+    bottom: 15%;
+    left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(201,167,107,0.4), transparent);
+  }
+
+  .hero__ripple::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,167,107,0.2), transparent);
+    animation: rippleOut 4s ease-in-out infinite;
+  }
+
+  @keyframes inkSpread {
+    0% { transform: scale(1) translate(0, 0); }
+    100% { transform: scale(1.3) translate(5%, -3%); }
+  }
+
+  @keyframes rippleOut {
+    0%, 100% { opacity: 0.2; transform: scaleX(0.6); }
+    50% { opacity: 0.6; transform: scaleX(1); }
+  }
+
+  /* 龙舟剪影 */
+  .hero__boat {
+    position: absolute;
+    bottom: 20%;
+    left: -200px;
+    animation: boatGlide 25s linear infinite;
+    opacity: 0.15;
+  }
+
+  .hero__boat svg {
+    width: 180px;
+    height: auto;
+  }
+
+  @keyframes boatGlide {
+    0% { transform: translateX(-10vw); }
+    100% { transform: translateX(110vw); }
+  }
+
+  /* 主文字 */
+  .hero__content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .hero__eyebrow {
+    font-family: var(--sans);
+    font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+    letter-spacing: 0.35em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero__title {
+    font-family: var(--serif);
+    font-size: clamp(4rem, 12vw, 10rem);
+    font-weight: 900;
+    color: var(--paper);
+    line-height: 1;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 80px rgba(196,58,49,0.3);
+  }
+
+  .hero__subtitle {
+    font-family: var(--serif);
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    color: var(--celadon-light);
+    letter-spacing: 0.25em;
+    font-weight: 400;
+  }
+
+  .hero__scroll {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    color: var(--gold-pale);
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.5; }
+    50% { transform: translateX(-50%) translateY(-8px); opacity: 1; }
+  }
+
+  /* ========== SECTION 通用 ========== */
+  .section {
+    position: relative;
+    padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 6vw, 4rem);
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section--dark {
+    background: var(--ink);
+    color: var(--paper);
+    max-width: none;
+    padding-left: 0; padding-right: 0;
+  }
+
+  .section--dark .section__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 6vw, 4rem);
+  }
+
+  .section__label {
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    color: var(--vermillion);
+    margin-bottom: 1rem;
+    display: inline-block;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--vermillion);
+  }
+
+  .section--dark .section__label {
+    color: var(--gold);
+    border-color: var(--gold);
+  }
+
+  /* ========== 屈原 ========== */
+  .quyuan {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: center;
+    min-height: 70vh;
+  }
+
+  .quyuan__visual {
+    position: relative;
+    aspect-ratio: 4/5;
+    background: linear-gradient(135deg, var(--ink) 0%, #2a2320 50%, #1a1514 100%);
+    border-radius: 2px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* CSS 汨罗江 */
+  .quyuan__river {
+    position: absolute;
+    bottom: 0;
+    left: 0; right: 0;
+    height: 40%;
+    background: linear-gradient(180deg, 
+      transparent 0%, 
+      rgba(91,140,122,0.3) 20%, 
+      rgba(91,140,122,0.6) 50%, 
+      rgba(40,80,70,0.8) 100%
+    );
+  }
+
+  .quyuan__river::before {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: -5%; right: -5%;
+    height: 2px;
+    background: var(--gold);
+    opacity: 0.3;
+    animation: shimmer 3s ease-in-out infinite;
+  }
+
+  .quyuan__river::after {
+    content: '';
+    position: absolute;
+    top: 25%;
+    left: -5%; right: -5%;
+    height: 1px;
+    background: var(--gold-pale);
+    opacity: 0.15;
+    animation: shimmer 3s ease-in-out infinite 1s;
+  }
+
+  @keyframes shimmer {
+    0%, 100% { opacity: 0.15; }
+    50% { opacity: 0.4; }
+  }
+
+  .quyuan__moon {
+    position: absolute;
+    top: 15%;
+    right: 15%;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 40%, var(--paper) 0%, var(--gold-pale) 60%, transparent 70%);
+    opacity: 0.7;
+    box-shadow: 0 0 40px rgba(201,167,107,0.2);
+  }
+
+  .quyuan__reed {
+    position: absolute;
+    bottom: 35%;
+    left: 20%;
+    width: 2px;
+    height: 80px;
+    background: linear-gradient(180deg, transparent, rgba(184,207,194,0.4));
+    transform: rotate(-5deg);
+  }
+
+  .quyuan__reed::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -4px;
+    width: 10px;
+    height: 20px;
+    background: rgba(184,207,194,0.3);
+    border-radius: 50%;
+    transform: rotate(20deg);
+  }
+
+  .quyuan__text h2 {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.3;
+    margin-bottom: 1.5rem;
+  }
+
+  .quyuan__text h2 em {
+    font-style: normal;
+    color: var(--vermillion);
+  }
+
+  .quyuan__text p {
+    font-size: clamp(0.95rem, 1.3vw, 1.1rem);
+    color: var(--text-soft);
+    margin-bottom: 1.2rem;
+    max-width: 52ch;
+  }
+
+  .quyuan__quote {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    color: var(--vermillion-deep);
+    border-left: 3px solid var(--vermillion);
+    padding-left: 1.5rem;
+    margin-top: 2rem;
+    font-style: italic;
+  }
+
+  /* ========== 楚辞 ========== */
+  .chuci {
+    text-align: center;
+    padding: clamp(5rem, 12vw, 10rem) clamp(1rem, 4vw, 3rem);
+  }
+
+  .chuci__title {
+    font-family: var(--serif);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: var(--paper);
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+
+  .chuci__subtitle {
+    color: var(--gold);
+    font-size: 0.85rem;
+    letter-spacing: 0.3em;
+    margin-bottom: 3rem;
+  }
+
+  /* 竖排诗词 */
+  .chuci__verse {
+    display: flex;
+    justify-content: center;
+    gap: clamp(1rem, 3vw, 2.5rem);
+    flex-wrap: wrap;
+    margin: 0 auto;
+    max-width: 800px;
+  }
+
+  .chuci__column {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    font-family: var(--serif);
+    font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+    line-height: 2.2;
+    letter-spacing: 0.25em;
+    color: var(--celadon-light);
+    text-align: start;
+    white-space: nowrap;
+  }
+
+  .chuci__column--highlight {
+    color: var(--gold);
+    font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+  }
+
+  .chuci__attr {
+    font-family: var(--serif);
+    color: var(--celadon);
+    opacity: 0.6;
+    font-size: 0.85rem;
+    margin-top: 3rem;
+    letter-spacing: 0.2em;
+  }
+
+  /* ========== 龙舟 ========== */
+  .longzhou {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .longzhou__header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .longzhou__header h2 {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .longzhou__track {
+    position: relative;
+    height: 200px;
+    background: linear-gradient(180deg, 
+      rgba(91,140,122,0.08) 0%, 
+      rgba(91,140,122,0.15) 40%, 
+      rgba(91,140,122,0.08) 100%
+    );
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 0 clamp(1rem, 4vw, 3rem);
+  }
+
+  .longzhou__waterline {
+    position: absolute;
+    top: 45%;
+    left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--celadon), transparent);
+    opacity: 0.3;
+    animation: shimmer 4s ease-in-out infinite;
+  }
+
+  .longzhou__boats {
+    position: absolute;
+    top: 35%;
+    display: flex;
+    animation: race 20s linear infinite;
+  }
+
+  .longzhou__boat {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    margin-right: 120px;
+    flex-shrink: 0;
+  }
+
+  .longzhou__boat-head {
+    width: 0; height: 0;
+    border-top: 14px solid transparent;
+    border-bottom: 14px solid transparent;
+    border-right: 28px solid var(--vermillion);
+  }
+
+  .longzhou__boat-body {
+    width: 120px;
+    height: 4px;
+    background: var(--ink);
+    border-radius: 2px;
+    position: relative;
+  }
+
+  .longzhou__boat-body::after {
+    content: '';
+    position: absolute;
+    top: -16px;
+    left: 20px;
+    width: 2px;
+    height: 20px;
+    background: var(--vermillion);
+    opacity: 0.5;
+  }
+
+  .longzhou__boat-tail {
+    width: 0; height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 20px solid var(--ink);
+  }
+
+  .longzhou__paddle {
+    position: absolute;
+    top: -22px;
+    width: 3px;
+    height: 28px;
+    background: var(--gold);
+    border-radius: 1px;
+    opacity: 0.6;
+    animation: paddle 0.6s ease-in-out infinite;
+  }
+
+  @keyframes race {
+    0% { transform: translateX(-30vw); }
+    100% { transform: translateX(110vw); }
+  }
+
+  @keyframes paddle {
+    0%, 100% { transform: rotate(-15deg); }
+    50% { transform: rotate(15deg); }
+  }
+
+  .longzhou__desc {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+    padding: 0 clamp(1rem, 4vw, 3rem);
+  }
+
+  .longzhou__card {
+    padding: 1.5rem;
+    border-top: 2px solid var(--celadon);
+  }
+
+  .longzhou__card h3 {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .longzhou__card p {
+    font-size: 0.9rem;
+    color: var(--text-soft);
+    line-height: 1.6;
+  }
+
+  /* ========== 粽子 ========== */
+  .zongzi {
+    background: var(--paper-warm);
+    max-width: none;
+    padding-left: 0; padding-right: 0;
+  }
+
+  .zongzi__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 6vw, 4rem);
+  }
+
+  .zongzi__header {
+    margin-bottom: 3rem;
+  }
+
+  .zongzi__header h2 {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .zongzi__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  .zongzi__item {
+    background: var(--paper);
+    padding: 1.5rem;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+
+  .zongzi__item:hover {
+    transform: translateY(-4px);
+  }
+
+  .zongzi__item::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .zongzi__item:nth-child(1)::before { background: var(--vermillion); }
+  .zongzi__item:nth-child(2)::before { background: var(--gold); }
+  .zongzi__item:nth-child(3)::before { background: var(--celadon); }
+  .zongzi__item:nth-child(4)::before { background: var(--water); }
+
+  .zongzi__item h3 {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    color: var(--ink);
+    margin: 0.5rem 0 0.5rem;
+  }
+
+  .zongzi__item p {
+    font-size: 0.85rem;
+    color: var(--text-soft);
+    line-height: 1.6;
+  }
+
+  .zongzi__icon {
+    font-size: 1.8rem;
+  }
+
+  /* ========== 五色 ========== */
+  .wuse {
+    text-align: center;
+    padding: clamp(4rem, 8vw, 6rem) clamp(1rem, 4vw, 3rem);
+  }
+
+  .wuse__title {
+    font-family: var(--serif);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .wuse__sub {
+    color: var(--text-soft);
+    font-size: 0.9rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .wuse__threads {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+
+  .wuse__thread {
+    width: clamp(40px, 8vw, 64px);
+    height: clamp(40px, 8vw, 64px);
+    border-radius: 50%;
+    margin: 0 -6px;
+    position: relative;
+    transition: transform 0.3s ease;
+    border: 3px solid var(--paper);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+
+  .wuse__thread:hover {
+    transform: scale(1.2);
+    z-index: 2;
+  }
+
+  .wuse__thread:nth-child(1) { background: #c43a31; } /* 赤 */
+  .wuse__thread:nth-child(2) { background: #d4a843; } /* 黄 */
+  .wuse__thread:nth-child(3) { background: #4a7c6f; } /* 青 */
+  .wuse__thread:nth-child(4) { background: #f0ede6; } /* 白 */
+  .wuse__thread:nth-child(5) { background: var(--ink); }  /* 黑 */
+
+  .wuse__labels {
+    display: flex;
+    justify-content: center;
+    gap: clamp(2rem, 6vw, 4rem);
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .wuse__label {
+    font-family: var(--serif);
+    font-size: 0.85rem;
+    color: var(--text-soft);
+    letter-spacing: 0.1em;
+  }
+
+  /* ========== FOOTER ========== */
+  .footer {
+    text-align: center;
+    padding: 4rem 1.5rem;
+    border-top: 1px solid rgba(0,0,0,0.06);
+  }
+
+  .footer__text {
+    font-family: var(--serif);
+    font-size: 0.85rem;
+    color: var(--text-soft);
+    letter-spacing: 0.15em;
+    line-height: 2;
+  }
+
+  .footer__text em {
+    font-style: normal;
+    color: var(--vermillion);
+  }
+
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 768px) {
+    .quyuan {
+      grid-template-columns: 1fr;
+      min-height: auto;
+      gap: 2rem;
+    }
+
+    .quyuan__visual {
+      aspect-ratio: 3/2;
+      order: -1;
+    }
+
+    .zongzi__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .chuci__verse {
+      gap: 0.8rem;
+    }
+
+    .chuci__column {
+      font-size: 1rem;
+      letter-spacing: 0.15em;
+    }
+
+    .longzhou__desc {
+      grid-template-columns: 1fr;
+    }
+
+    .longzhou__track {
+      height: 120px;
+    }
+
+    .longzhou__boat {
+      margin-right: 60px;
+    }
+
+    .longzhou__boat-body {
+      width: 80px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .zongzi__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero__title {
+      font-size: 3.5rem;
+    }
+
+    .chuci__verse {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .chuci__column {
+      writing-mode: horizontal-tb;
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      white-space: normal;
+      text-align: center;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero__ink">
+    <div class="hero__ink-wash"></div>
+    <div class="hero__ink-wash"></div>
+    <div class="hero__ink-wash"></div>
+  </div>
+
+  <div class="hero__boat" aria-hidden="true">
+    <svg viewBox="0 0 200 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M30 20 L0 20 L5 15 L10 20 L15 15 L20 20 L25 15 L30 20 L200 20" stroke="white" stroke-width="1.5" fill="none"/>
+      <path d="M180 20 L195 10 L195 20" fill="white"/>
+      <line x1="60" y1="20" x2="60" y2="5" stroke="white" stroke-width="1" opacity="0.5"/>
+      <line x1="100" y1="20" x2="100" y2="5" stroke="white" stroke-width="1" opacity="0.5"/>
+      <line x1="140" y1="20" x2="140" y2="5" stroke="white" stroke-width="1" opacity="0.5"/>
+    </svg>
+  </div>
+
+  <div class="hero__content">
+    <p class="hero__eyebrow">Dragon Boat Festival</p>
+    <h1 class="hero__title">端午</h1>
+    <p class="hero__subtitle">魂兮归来 · 与天地兮同寿</p>
+  </div>
+
+  <div class="hero__ripple"></div>
+
+  <p class="hero__scroll">▼ 汨罗江上</p>
+</section>
+
+<!-- 屈原 -->
+<section class="section">
+  <div class="quyuan">
+    <div class="quyuan__visual" aria-hidden="true">
+      <div class="quyuan__moon"></div>
+      <div class="quyuan__reed"></div>
+      <div class="quyuan__river"></div>
+    </div>
+    <div class="quyuan__text">
+      <span class="section__label">屈 原</span>
+      <h2>虽<em>九死</em>其犹未悔</h2>
+      <p>公元前 278 年，秦将白起攻破郢都。楚国大夫屈原在汨罗江畔行吟，写下绝笔《怀沙》后投江殉国。那一天是农历五月初五。</p>
+      <p>两千三百年过去，楚国的宫阙早已化为尘土，但「长太息以掩涕兮，哀民生之多艰」的悲悯，「路漫漫其修远兮，吾将上下而求索」的执着，仍在这片土地上回响。</p>
+      <p class="quyuan__quote">"举世皆浊我独清，众人皆醉我独醒。"</p>
+    </div>
+  </div>
+</section>
+
+<!-- 楚辞 -->
+<section class="section section--dark">
+  <div class="chuci">
+    <h2 class="chuci__title">楚 辞</h2>
+    <p class="chuci__subtitle">CHU CI · SONGS OF THE SOUTH</p>
+
+    <div class="chuci__verse">
+      <div class="chuci__column" role="text">
+        帝高阳之苗裔兮朕皇考曰伯庸
+      </div>
+      <div class="chuci__column chuci__column--highlight" role="text">
+        摄提贞于孟陬兮惟庚寅吾以降
+      </div>
+      <div class="chuci__column" role="text">
+        皇览揆余初度兮肇锡余以嘉名
+      </div>
+      <div class="chuci__column" role="text">
+        名余曰正则兮字余曰灵均
+      </div>
+    </div>
+
+    <p class="chuci__attr">——《离骚》开篇</p>
+  </div>
+</section>
+
+<!-- 龙舟 -->
+<section class="section longzhou">
+  <div class="longzhou__header">
+    <span class="section__label">龙 舟</span>
+    <h2>千帆竞渡</h2>
+  </div>
+
+  <div class="longzhou__track" aria-hidden="true">
+    <div class="longzhou__waterline"></div>
+    <div class="longzhou__boats">
+      <!-- 舟 1 -->
+      <div class="longzhou__boat">
+        <div class="longzhou__boat-head"></div>
+        <div class="longzhou__boat-body">
+          <div class="longzhou__paddle" style="left:15px; animation-delay:0s;"></div>
+          <div class="longzhou__paddle" style="left:35px; animation-delay:0.15s;"></div>
+          <div class="longzhou__paddle" style="left:55px; animation-delay:0.3s;"></div>
+          <div class="longzhou__paddle" style="left:75px; animation-delay:0.45s;"></div>
+          <div class="longzhou__paddle" style="left:95px; animation-delay:0.1s;"></div>
+        </div>
+        <div class="longzhou__boat-tail"></div>
+      </div>
+      <!-- 舟 2 -->
+      <div class="longzhou__boat">
+        <div class="longzhou__boat-head"></div>
+        <div class="longzhou__boat-body">
+          <div class="longzhou__paddle" style="left:15px; animation-delay:0.2s;"></div>
+          <div class="longzhou__paddle" style="left:35px; animation-delay:0.35s;"></div>
+          <div class="longzhou__paddle" style="left:55px; animation-delay:0.5s;"></div>
+          <div class="longzhou__paddle" style="left:75px; animation-delay:0.05s;"></div>
+          <div class="longzhou__paddle" style="left:95px; animation-delay:0.25s;"></div>
+        </div>
+        <div class="longzhou__boat-tail"></div>
+      </div>
+      <!-- 舟 3 -->
+      <div class="longzhou__boat">
+        <div class="longzhou__boat-head"></div>
+        <div class="longzhou__boat-body">
+          <div class="longzhou__paddle" style="left:15px; animation-delay:0.1s;"></div>
+          <div class="longzhou__paddle" style="left:35px; animation-delay:0.4s;"></div>
+          <div class="longzhou__paddle" style="left:55px; animation-delay:0.05s;"></div>
+          <div class="longzhou__paddle" style="left:75px; animation-delay:0.3s;"></div>
+          <div class="longzhou__paddle" style="left:95px; animation-delay:0.2s;"></div>
+        </div>
+        <div class="longzhou__boat-tail"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="longzhou__desc">
+    <div class="longzhou__card">
+      <h3>竞渡起源</h3>
+      <p>楚人划船投粽入江，驱散鱼虾以护屈原遗体。后演变为龙舟竞渡，成为端午最具仪式感的集体活动。</p>
+    </div>
+    <div class="longzhou__card">
+      <h3>龙首点睛</h3>
+      <p>赛前请德高望重者为龙舟点睛——朱砂点龙睛，唤醒神龙。一点天庭，二点眼睛，三点口利。</p>
+    </div>
+    <div class="longzhou__card">
+      <h3>鼓声作令</h3>
+      <p>船头鼓手以鼓点统一桨频，急如骤雨。鼓声不止，龙舟不歇。一鼓作气，再而衰，三而竭。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 粽子 -->
+<section class="section zongzi">
+  <div class="zongzi__inner">
+    <div class="zongzi__header">
+      <span class="section__label">粽 子</span>
+      <h2>一叶裹春秋</h2>
+    </div>
+
+    <div class="zongzi__grid">
+      <div class="zongzi__item">
+        <div class="zongzi__icon">🌿</div>
+        <h3>箬叶</h3>
+        <p>以箬竹叶包裹，清香渗入糯米。南方的阔叶箬竹，北方的芦苇叶，各有其味。</p>
+      </div>
+      <div class="zongzi__item">
+        <div class="zongzi__icon">🥚</div>
+        <h3>咸粽</h3>
+        <p>鲜肉、蛋黄、香菇、板栗。入口咸香，油脂浸润糯米，一颗足以饱腹。浙沪闽粤各有流派。</p>
+      </div>
+      <div class="zongzi__item">
+        <div class="zongzi__icon">🫘</div>
+        <h3>甜粽</h3>
+        <p>豆沙、红枣、蜜枣、莲子。北方偏好甜口，蘸白糖而食。软糯清甜，冷热皆宜。</p>
+      </div>
+      <div class="zongzi__item">
+        <div class="zongzi__icon">🎋</div>
+        <h3>五色丝</h3>
+        <p>系五色丝线于粽上，青赤黄白黑，象征五行护佑。食粽后系于孩童腕间，避邪纳吉。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 五色 -->
+<section class="section wuse">
+  <h3 class="wuse__title">五色缕</h3>
+  <p class="wuse__sub">青 · 赤 · 黄 · 白 · 黑 —— 端午系于腕间的五行守护</p>
+
+  <div class="wuse__threads" aria-hidden="true">
+    <div class="wuse__thread"></div>
+    <div class="wuse__thread"></div>
+    <div class="wuse__thread"></div>
+    <div class="wuse__thread"></div>
+    <div class="wuse__thread"></div>
+  </div>
+
+  <div class="wuse__labels">
+    <span class="wuse__label">赤·火</span>
+    <span class="wuse__label">黄·土</span>
+    <span class="wuse__label">青·木</span>
+    <span class="wuse__label">白·金</span>
+    <span class="wuse__label">黑·水</span>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <p class="footer__text">
+    五月五日午，赠我一枝艾<br>
+    <em>魂兮归来</em> · 反故居些<br>
+    <span style="opacity: 0.5; font-size: 0.75rem;">2026 · 端午</span>
+  </p>
+</footer>
+
+</body>
+</html>
